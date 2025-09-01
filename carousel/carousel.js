@@ -29,12 +29,23 @@ export class Carousel
         this.#content = this.container.querySelector('.carousel-content');
         this.#indicators = this.container.querySelector('.carousel-indicators');
         this.#navigation = this.container.querySelector('.carousel-navigation');
-        this.#navigationLeft = this.container.querySelector('.carousel-navigation-left');
-        this.#navigationRight = this.container.querySelector('.carousel-navigation-right');
+        this.#navigationLeft = this.container.querySelector('.carousel-navigation-left .carousel-navigation-button');
+        this.#navigationRight = this.container.querySelector('.carousel-navigation-right .carousel-navigation-button');
         this.#itemTemplate = this.container.querySelector('template#carousel-item-template');
         this.#indicatorTemplate = this.container.querySelector('template#carousel-indicator-template');
 
-        this.startAutoCycle();
+        // Add event listeners for navigation buttons
+        this.#navigationLeft.addEventListener('click', () => {
+            this.#goToPrevious();
+            this.restartAutoCycle();
+        });
+        
+        this.#navigationRight.addEventListener('click', () => {
+            this.#goToNext();
+            this.restartAutoCycle();
+        });
+
+        this.restartAutoCycle();
     }
 
     addImage(imageURL)
@@ -49,7 +60,7 @@ export class Carousel
         this.#content.appendChild(newItemInstance);
     }
 
-    startAutoCycle()
+    restartAutoCycle()
     {
         this.stopAutoCycle();
 
@@ -71,7 +82,7 @@ export class Carousel
 
     #goToPrevious()
     {
-        this.#goTo(this.#currentItemIndex - 1 < 0? this.#images.length : this.#currentItemIndex - 1);
+        this.#goTo(this.#currentItemIndex - 1 < 0? this.#images.length - 1 : this.#currentItemIndex - 1);
     }
 
     #goTo(index)

@@ -8,6 +8,7 @@
 .carousel-viewport
 {
     padding: 8px;
+    position: relative;
 }
 
 .carousel-content
@@ -24,8 +25,51 @@
     object-fit: contain;
 }
 
+.carousel-navigation
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
 .carousel-navigation-left,
 .carousel-navigation-right
 {
-    
+    width: 40px;
+}
+
+.carousel-navigation-left
+{
+    background-image: linear-gradient(-90deg, transparent, rgba(90, 130, 139, 0.4));
+}
+
+.carousel-navigation-right
+{
+    background-image: linear-gradient(90deg, transparent, rgba(90, 130, 139, 0.4));
+}
+
+.carousel-navigation-button
+{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    background-repeat: no-repeat;
+    background-position: center center;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(158deg) brightness(106%) contrast(102%);
+}
+
+.carousel-navigation-right > .carousel-navigation-button
+{
+    background-image: url("./chevron-right.svg");
+}
+
+.carousel-navigation-left > .carousel-navigation-button
+{
+    background-image: url("./chevron-left.svg");
 }
