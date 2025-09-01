@@ -1,10 +1,7 @@
 export class Carousel
 {
-    #carousel;
-    #viewport;
     #content;
     #indicatorsContainer;
-    #navigation;
     #navigationLeft;
     #navigationRight;
     #itemTemplate;
@@ -25,17 +22,13 @@ export class Carousel
 
     #init() 
     {
-        this.#carousel = this.container.querySelector('.carousel');
-        this.#viewport = this.container.querySelector('.carousel-viewport');
         this.#content = this.container.querySelector('.carousel-content');
         this.#indicatorsContainer = this.container.querySelector('.carousel-indicators');
-        this.#navigation = this.container.querySelector('.carousel-navigation');
         this.#navigationLeft = this.container.querySelector('.carousel-navigation-left .carousel-navigation-button');
         this.#navigationRight = this.container.querySelector('.carousel-navigation-right .carousel-navigation-button');
         this.#itemTemplate = this.container.querySelector('template#carousel-item-template');
         this.#indicatorTemplate = this.container.querySelector('template#carousel-indicator-template');
 
-        // Add event listeners for navigation buttons
         this.#navigationLeft.addEventListener('click', () => {
             this.#goToPrevious();
         });
@@ -118,7 +111,6 @@ export class Carousel
     {
         this.restartAutoCycle();
 
-        console.log("moving to " + index);
         this.#currentItemIndex = index;
 
         let contentOffset = 0;
