@@ -25,6 +25,38 @@
     object-fit: contain;
 }
 
+.carousel-indicators
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.carousel-indicator
+{
+    width: 24px;
+    height: 20px;
+    background-color: transparent;
+}
+
+.carousel-indicator-icon
+{
+    height: 2px;
+    background-color: white;
+    border: 1px solid lightgray;
+}
+
+.carousel-indicator.inactive > .carousel-indicator-icon
+{
+    background-color: rgb(218, 218, 218);
+}
+
 .carousel-navigation
 {
     position: absolute;

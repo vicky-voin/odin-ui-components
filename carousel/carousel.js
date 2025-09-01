@@ -3,7 +3,7 @@ export class Carousel
     #carousel;
     #viewport;
     #content;
-    #indicators;
+    #indicatorsContainer;
     #navigation;
     #navigationLeft;
     #navigationRight;
@@ -11,6 +11,7 @@ export class Carousel
     #indicatorTemplate;
 
     #images = [];
+    #indicators = [];
 
     #cycleIntervalID;
 
@@ -27,7 +28,7 @@ export class Carousel
         this.#carousel = this.container.querySelector('.carousel');
         this.#viewport = this.container.querySelector('.carousel-viewport');
         this.#content = this.container.querySelector('.carousel-content');
-        this.#indicators = this.container.querySelector('.carousel-indicators');
+        this.#indicatorsContainer = this.container.querySelector('.carousel-indicators');
         this.#navigation = this.container.querySelector('.carousel-navigation');
         this.#navigationLeft = this.container.querySelector('.carousel-navigation-left .carousel-navigation-button');
         this.#navigationRight = this.container.querySelector('.carousel-navigation-right .carousel-navigation-button');
@@ -37,12 +38,10 @@ export class Carousel
         // Add event listeners for navigation buttons
         this.#navigationLeft.addEventListener('click', () => {
             this.#goToPrevious();
-            this.restartAutoCycle();
         });
         
         this.#navigationRight.addEventListener('click', () => {
             this.#goToNext();
-            this.restartAutoCycle();
         });
 
         this.restartAutoCycle();
@@ -58,6 +57,36 @@ export class Carousel
         this.#images.push(itemElement);
 
         this.#content.appendChild(newItemInstance);
+
+        this.#addIndicator();
+    }
+
+    #addIndicator()
+    {
+        const newIndicatorInstance = this.#indicatorTemplate.content.cloneNode(true);
+        const indicatorElement = newIndicatorInstance.querySelector(".carousel-indicator");
+
+        this.#indicators.push(indicatorElement);
+        const newIndex = this.#indicators.length-1;
+
+        this.#setIndicatorActive(indicatorElement, newIndex == this.#currentItemIndex);
+
+        this.#indicatorsContainer.appendChild(newIndicatorInstance);
+        
+        const appendedIndicator = this.#indicatorsContainer.lastElementChild;
+        appendedIndicator.addEventListener("click", () => {
+            this.#goTo(newIndex);
+        });
+    }
+
+    #setIndicatorActive(indicator, isActive)
+    {
+        indicator.classList.add('inactive');
+
+        if(isActive)
+        {
+            indicator.classList.remove('inactive');
+        }
     }
 
     restartAutoCycle()
@@ -87,14 +116,21 @@ export class Carousel
 
     #goTo(index)
     {
+        this.restartAutoCycle();
+
         console.log("moving to " + index);
         this.#currentItemIndex = index;
 
         let contentOffset = 0;
 
-        for(var i = 1; i <= index; i++)
+        for(var i = 0; i <= this.#images.length-1; i++)
         {
-            contentOffset -= this.#images[index].offsetWidth;
+            if(i >= 1 && i <= index)
+            {
+                contentOffset -= this.#images[index].offsetWidth;
+            }
+
+            this.#setIndicatorActive(this.#indicators[i], i == index);
         }
 
         this.#content.style.left = contentOffset + "px";
