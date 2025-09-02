@@ -1,0 +1,18 @@
+.registration-form
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.registration-form > input,
+.registration-form > select
+{
+    margin-bottom: 12px;
+    width:max-content;
+}
+
+.registration-form > input:invalid,
+.registration-form > select:invalid
+{
+    border: 2px solid red;
+}

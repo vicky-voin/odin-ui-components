@@ -21,10 +21,13 @@ export class ComponentLoader {
             
             // Load and initialize JavaScript
             const module = await import(`./${name}/${name}.js`);
+            
             const ComponentClass = module[this.capitalize(name)];
             
             if (ComponentClass) {
                 return new ComponentClass(container);
+            } else {
+                console.error(`Class ${this.capitalize(name)} not found in module`);
             }
             
         } catch (error) {
@@ -33,6 +36,10 @@ export class ComponentLoader {
     }
     
     static capitalize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
+        // Convert kebab-case to PascalCase
+        // e.g., "registration-form" becomes "RegistrationForm"
+        return str.split('-')
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join('');
     }
 }

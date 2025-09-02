@@ -13,4 +13,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     carousel.addImage("./beautiful-shot-big-green-leafed-trees-grassy-field.jpg");
     carousel.addImage("./green-grass-field-with-trees-daytime.jpg");
     carousel.addImage("./mountains-with-cedar-forest.jpg");
+
+    const formContainer = document.querySelector('.form-test');
+    const registrationForm = await ComponentLoader.loadComponent('registration-form', formContainer);
+
+    
 });
